@@ -1,5 +1,5 @@
 .sqlite3
 .db
-.node_modules
+node_modules
 /_pycache_
 .venv/
