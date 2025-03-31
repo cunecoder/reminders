@@ -1,4 +1,7 @@
 """
+urls.py
+
+Description:
 URL configuration for conf project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -13,10 +16,19 @@ Class-based views
 Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+
+Written by Abe Gomez: Partneres (David Marin and Noah Leeper)
+Created On: 3/30/25
+Last Updated: 3/30/25
 """
-from django.contrib import admin
-from django.urls import path
+
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from reminders import views
+
+router = DefaultRouter()
+router.register(r'reminders', views.ReminderViewSet, basename='reminder')
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', include(router.urls)),
 ]
