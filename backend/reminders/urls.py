@@ -18,14 +18,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 
 Written by Abe Gomez: Partners (David Marin and Noah Leeper)
-Created On: 4/8/25
+Created On: 3/30/25
 Last Updated: 4/8/25
 """
 
-from django.urls import path, include
-from django.contrib import admin
+from rest_framework.routers import DefaultRouter
+from reminders import views
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include("reminders.urls"))
-]
+router = DefaultRouter()
+router.register(r'reminders', views.ReminderViewSet)
+
+urlpatterns = router.urls
