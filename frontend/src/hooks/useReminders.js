@@ -1,3 +1,12 @@
+/*
+useReminders.js
+Description: This file holdss the hooks that grab necessary information from the database to be used in the frontend.
+Written by: Abe Gomez for project with teamates: (David Marin and Noah Leeper)
+Created on: 4/8/2025
+Last Updated on: 4/22/2025
+
+*/
+
 import { API_URL } from "../constants";
 import { useState, useEffect } from "react";
 
@@ -39,6 +48,7 @@ export function useRemindersList() {
 
 export function useReminderCreate() {
     const [name, setName] = useState("");
+    const [remindBy, setRemindBy] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [successful, setSuccessful] = useState(false);
@@ -57,7 +67,8 @@ export function useReminderCreate() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                reminder_name: name
+                remind_name: name,
+                remind_by: remindBy,
             }),
         })
 
@@ -79,10 +90,51 @@ export function useReminderCreate() {
     return {
         name,
         setName,
+        remindBy,
+        setRemindBy,
         loading,
         error,
         successful,
         createReminder,
     }
 
+}
+
+export function useReminderDetail(id) {
+    const [reminder, setReminder] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        setLoading(true);
+        fetch(`${API_URL}/reminders/${id}/`, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+        .then((response) => {
+            if(response.ok) {
+                return response.json();
+            }
+            setLoading(false);
+            throw new Error("Error getting data");
+
+        })
+
+        .then(json => {
+            setLoading(false);
+            setReminder(json);
+        })
+
+        .catch((err) => {
+            setError(err);
+        })
+    }, [])
+
+    return {
+        reminder,
+        loading, 
+        error
+    } 
 }
