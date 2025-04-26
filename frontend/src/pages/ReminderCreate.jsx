@@ -8,6 +8,7 @@ Last Updated on: 4/22/2025
 */
 
 import React from "react";
+import {useEffect} from "react";
 import { useReminderCreate } from "../hooks/useReminders";
 import { useNavigate } from "react-router";
 
@@ -16,9 +17,11 @@ export function ReminderCreate() {
         useReminderCreate();
     const navigate = useNavigate();
 
-    if(successful) {
-        navigate("/");
-    }
+    useEffect(() => {
+        if (successful) {
+          navigate("/");
+        }
+      }, [successful]);
 
     if(loading) {
         return <>

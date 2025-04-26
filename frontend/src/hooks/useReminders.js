@@ -1,9 +1,9 @@
 /*
 useReminders.js
-Description: This file holdss the hooks that grab necessary information from the database to be used in the frontend.
-Written by: Abe Gomez for project with teamates: (David Marin and Noah Leeper)
+Description: This file holds the hooks that grab necessary information from the database to be used in the frontend.
+Written by: Abe Gomez and David Marin for project with teamates: (Noah Leeper)
 Created on: 4/8/2025
-Last Updated on: 4/22/2025
+Last Updated on: 4/26/2025
 
 */
 
@@ -137,4 +137,71 @@ export function useReminderDetail(id) {
         loading, 
         error
     } 
+}
+
+export function useReminderEdit(reminder) {
+    const [name, setName] = useState(reminder.remind_name);
+    /* below this line was ---> const [remindBy, setRemindBy.....*/
+    const [remindby, setRemindBy] = useState(reminder.remind_by);
+    const [createdat, setCreatedAt] = useState(reminder.created_at);
+    const [updatedat, setUpdatedAt] = useState(reminder.updated_at);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [successful, setSuccessful] = useState(false);
+
+    /**
+     * Edit the reminder parameter and send the request.
+     * @param {SubmitEvent} event The submit event from the form.
+     */
+
+    const editReminder = (event) => {
+        event.preventDefault();
+        setLoading(true);
+        fetch(`${API_URL}/reminders/${reminder.id}`, {
+            /** Put is used to change data instead of POST, which creates new data */
+            method: "PUT", 
+            headers: {
+                "Content-Type": "application/json"
+            },
+            /** Below is allowing the user to change these parameters */
+            body: JSON.stringify({
+                remind_name: name,
+                remind_by: remindby,
+                created_at: createdat,
+                updated_at: updatedat
+            }),
+        })
+
+        .then((response) => {
+            setLoading(false);
+            if(response.ok) {
+                setSuccessful(true);
+                return;
+            }
+            throw new Error("Uh Oh!");
+        })
+        
+        .catch((err) => {
+            setError(err);
+            setSuccessful(false);
+        });
+    };
+
+    return {
+        name,
+        setName,
+        remindby,
+        setRemindBy,
+        createdat,
+        setCreatedAt,
+        updatedat,
+        setUpdatedAt,
+        loading,
+        error,
+        successful,
+        editReminder,
+        /* Personal note: whenever you return a set.... you allow that person who uses
+        your hook to use that set.... i.e., they can edit that. */
+    }
+
 }
