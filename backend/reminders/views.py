@@ -9,10 +9,20 @@ Last Updated on: 3/29/2025
 
 from django.shortcuts import render
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 from .models import Reminder
 from .serializers import ReminderSerializer
 
 
 class ReminderViewSet(viewsets.ModelViewSet):
     queryset = Reminder.objects.all()
-    serializer_class = ReminderSerializer  
+    serializer_class = ReminderSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def get_queryset(self):
+        return Reminder.objects.filter(user=self.request.user)

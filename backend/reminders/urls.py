@@ -23,9 +23,9 @@ Last Updated: 4/8/25
 """
 
 from rest_framework.routers import DefaultRouter
-from reminders import views
+from . import views
 
 router = DefaultRouter()
-router.register(r'reminders', views.ReminderViewSet)
+router.register(r"reminders", views.ReminderViewSet)
 
 urlpatterns = router.urls
