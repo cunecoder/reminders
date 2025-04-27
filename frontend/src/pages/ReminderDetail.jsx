@@ -37,6 +37,7 @@ export function ReminderDetail() {
    hour: "numeric",
    minute: "2-digit",
    hour12: true,
+   timeZone: "US/Central",
  });
 
  const formattedCreatedAt = new Date(reminder.created_at).toLocaleString("en-US", {
@@ -47,6 +48,7 @@ export function ReminderDetail() {
    hour: "numeric",
    minute: "2-digit",
    hour12: true,
+   timeZone: "US/Central",
  });
 
  const formattedUpdatedAt = new Date(reminder.updated_at).toLocaleString("en-US", {
@@ -57,6 +59,7 @@ export function ReminderDetail() {
    hour: "numeric",
    minute: "2-digit",
    hour12: true,
+   timeZone: "US/Central",
  });
  
  return <>

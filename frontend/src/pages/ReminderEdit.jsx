@@ -37,8 +37,9 @@ export function ReminderEdit() {
         <h1>Uh Oh! "{reminder.remind_name}"</h1>
         </>
     }
-    
+
     return <>
+
 
     <h1>Editing Reminder: "{reminder.remind_name}"</h1>
     <form onSubmit={editReminder}>

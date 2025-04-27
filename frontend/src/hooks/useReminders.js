@@ -143,9 +143,10 @@ export function useReminderEdit(reminder = {}) {
     // ?? "" are needed behind some useStates to prevent any undefined
     // values if the reminder data does not import quick enough.
     const [name, setName] = useState(reminder.remind_name ?? "");
-    const [remindby, setRemindBy] = useState(reminder.remind_by ?? "");
-    const [createdat, setCreatedAt] = useState(reminder.created_at);
-    const [updatedat, setUpdatedAt] = useState(reminder.updated_at);
+    // Date modifications are just formatting to ensure database utc time is dealt with appropriately
+    const [remindby, setRemindBy] = useState(reminder?.remind_by ? new Date(reminder.remind_by).toISOString().slice(0,16) : "");
+    const [createdat, setCreatedAt] = useState(reminder.created_at ?? new Date().toISOString());
+    const [updatedat, setUpdatedAt] = useState(reminder.updated_at ?? new Date().toISOString());
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [successful, setSuccessful] = useState(false);
@@ -158,6 +159,9 @@ export function useReminderEdit(reminder = {}) {
     const editReminder = (event) => {
         event.preventDefault();
         setLoading(true);
+
+        // Deal with database utc modifications
+        const utcTime = new Date(remindby).toISOString();
         fetch(`${API_URL}/reminders/${reminder.id}/`, {
             /** Put is used to change data instead of POST, which creates new data */
             method: "PUT", 
@@ -167,7 +171,7 @@ export function useReminderEdit(reminder = {}) {
             /** Below is allowing the user to change these parameters */
             body: JSON.stringify({
                 remind_name: name,
-                remind_by: remindby,
+                remind_by: utcTime,
                 created_at: createdat,
                 updated_at: updatedat
             }),
@@ -201,8 +205,6 @@ export function useReminderEdit(reminder = {}) {
         error,
         successful,
         editReminder,
-        /* Personal note: whenever you return a set.... you allow that person who uses
-        your hook to use that set.... i.e., they can edit that. */
     }
 
 }
