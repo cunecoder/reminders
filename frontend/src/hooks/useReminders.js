@@ -1,7 +1,7 @@
 /*
 useReminders.js
 Description: This file holds the hooks that grab necessary information from the database to be used in the frontend.
-Written by: Abe Gomez and David Marin for project with teamates: (Noah Leeper)
+Written by: Abe Gomez and David Marin for project with teammates: (Noah Leeper)
 Created on: 4/8/2025
 Last Updated on: 4/26/2025
 

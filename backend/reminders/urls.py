@@ -1,5 +1,5 @@
 """
-urls.py
+urls.py (reminders)
 
 Description:
 URL configuration for conf project.

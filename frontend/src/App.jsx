@@ -1,3 +1,12 @@
+/*
+App.jsx
+Description: This file is the home page where reminders are listed and can be viewed, edits, and created.
+Written by: Abe Gomez for project with teamates: (David Marin and Noah Leeper)
+Created on: 4/8/2025
+Last Updated on: 4/26/2025
+
+*/
+
 import { Link } from "react-router-dom"
 import './App.css'
 import { useRemindersList, useRemindersDelete } from './hooks/useReminders'

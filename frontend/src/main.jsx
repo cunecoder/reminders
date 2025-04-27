@@ -1,3 +1,12 @@
+/*
+main.jsx
+Description: This file is the page where routing can be found.
+Written by: Abe Gomez and David Marin for project with teamates: (Noah Leeper)
+Created on: 4/8/2025
+Last Updated on: 4/26/2025
+
+*/
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { StrictMode } from 'react';
