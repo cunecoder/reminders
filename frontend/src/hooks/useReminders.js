@@ -43,7 +43,7 @@ export function useRemindersList() {
     }, [])
 
     // Shorthand for { reminders: reminders, loading: loading, error: error }
-    return {reminders, loading, error} 
+    return {reminders, setReminders, loading, error} 
 }
 
 export function useReminderCreate() {
@@ -54,13 +54,14 @@ export function useReminderCreate() {
     const [successful, setSuccessful] = useState(false);
 
     /**
-     * Create a new task and send the request.
+     * Create a new reminder and send the request.
      * @param {SubmitEvent} event The submit event from the form.
      */
 
     const createReminder = (event) => {
         event.preventDefault();
         setLoading(true);
+        const utcTime = new Date (remindBy).toISOString();
         fetch(`${API_URL}/reminders/`, {
             method: "POST",
             headers: {
@@ -68,7 +69,7 @@ export function useReminderCreate() {
             },
             body: JSON.stringify({
                 remind_name: name,
-                remind_by: remindBy,
+                remind_by: utcTime,
             }),
         })
 
@@ -207,4 +208,45 @@ export function useReminderEdit(reminder = {}) {
         editReminder,
     }
 
+}
+
+
+export function useRemindersDelete() {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [successful, setSuccessful] = useState(false);
+
+    /**
+     * Delete a reminder and send the request.
+     * @param {string} id The ID of the reminders to delete.
+     */
+
+
+    const deleteReminder = (id) => {
+        setLoading(true);
+        fetch(`${API_URL}/reminders/${id}/`, {
+            method: "DELETE",
+        })
+
+        .then((response) => {
+            setLoading(false);
+            if(response.ok) {
+                setSuccessful(true);
+                return;
+            }
+            throw new Error("Uh Oh!");
+        })
+        
+        .catch((err) => {
+            setError(err);
+            setSuccessful(false);
+        });
+    };
+
+    return {
+        deleteReminder,
+        loading,
+        error,
+        successful,
+    };
 }

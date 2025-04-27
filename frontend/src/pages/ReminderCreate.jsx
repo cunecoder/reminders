@@ -8,6 +8,7 @@ Last Updated on: 4/22/2025
 */
 
 import React from "react";
+import { Link } from "react-router-dom"
 import {useEffect} from "react";
 import { useReminderCreate } from "../hooks/useReminders";
 import { useNavigate } from "react-router";
@@ -42,5 +43,6 @@ export function ReminderCreate() {
             <input type="datetime-local" value={remind_by} onChange={(e) => setRemindBy(e.target.value)}/>
             <button type="submit">Create Reminder</button>
         </form>
+        <Link to={`/`}>Back to Reminders List</Link>
     </>
 }
