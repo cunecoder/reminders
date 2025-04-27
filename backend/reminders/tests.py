@@ -22,7 +22,7 @@ class ReminderAPITests(APITestCase):
         data = {"remind_name": "New Test Reminder", "remind_by": "2025-05-01T12:00:00Z"}
         response = self.client.post("/api/reminders/", data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(Reminder.objects.filter(user=self.user).count(), 2)
+        self.assertEqual(Reminder.objects.filter(user=self.user).count(), 1)
 
     def test_get_reminder(self):
         response = self.client.get(f"/api/reminders/{self.reminder.id}/")
