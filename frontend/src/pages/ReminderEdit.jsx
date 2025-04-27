@@ -1,7 +1,7 @@
 /*
 ReminderEdit.jsx
 Description: This file is the page where reminders can be edited.
-Written by: David Marin for project with teammates: (Abe Gomez and Noah Leeper)
+Written by: David Marin and Abe Gomez for project with teammates: (Noah Leeper)
 Created on: 4/25/2025
 Last Updated on: 4/26/2025
 
@@ -13,45 +13,28 @@ import { useReminderEdit, useReminderDetail } from "../hooks/useReminders";
 import { useNavigate, useParams } from "react-router";
 
 export function ReminderEdit() {
-    /** Personal note: Get id from url */
+    // Grab id to edit specific reminder
     const { id } = useParams();
-    // const { reminder } = useReminderDetail(id)
-    const { reminder, loading: loadingDetail, error: errorDetail } = useReminderDetail(id);
+    const { reminder } = useReminderDetail(id);
+    const { name, setName, remindby, setRemindBy, createdat, setCreatedAt, updatedat, setUpdatedAt, loading, error, successful, editReminder  } = 
+        useReminderEdit(reminder);
     const navigate = useNavigate();
-   
-    /** Testing this from chat
-     */
-   
-    if (loadingDetail) {
-        return <h1>Loading Reminder...</h1>;
-    }
-
-    if (errorDetail || !reminder) {
-        return <h1>Uh Oh! Reminder not found.</h1>;
-    }
-
-    const { name, setName, remindby, setRemindBy, createdat, setCreatedAt, updatedat, setUpdatedAt, loading, error, successful, editReminder  } = useReminderEdit(reminder)
-
-
  
     useEffect(() => {
         if (successful) {
-            navigate(`/reminder/${id}`);
+            navigate(`/reminders/${id}`);
         }
-    }, [successful, navigate, id]);
-    // if (successful) {
-    //     navigate(`/reminder/${id}`);
-    // }
+    }, [successful]);
 
     if(loading) {
         return <>
-        <h1>Saving Changes...</h1>
+        <h1>Loading...</h1>
         </>
     }
     
     if(error) {
         return <>
-        <h1>Uh Oh! Failed to edit "{reminder.remind_name}"</h1>
+        <h1>Uh Oh! "{reminder.remind_name}"</h1>
         </>
     }
     
@@ -71,12 +54,5 @@ export function ReminderEdit() {
         </div>
         <button type="submit">Edit Reminder</button>
     </form>
-    {/* Might not need this part
-                    <h1>{reminder.remind_name} {reminder.id}</h1>
-                    <h1>{reminder.remind_by}</h1>
-                    <h1>{reminder.created_at}</h1>
-                    <h1>{reminder.updated_at}</h1>
-    </>
-    */}
     </>
 }

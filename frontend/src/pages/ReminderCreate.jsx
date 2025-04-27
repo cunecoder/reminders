@@ -21,7 +21,7 @@ export function ReminderCreate() {
         if (successful) {
           navigate("/");
         }
-      }, [successful]);
+    }, [successful]);
 
     if(loading) {
         return <>

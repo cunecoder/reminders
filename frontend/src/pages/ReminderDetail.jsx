@@ -9,7 +9,7 @@ Last Updated on: 4/26/2025
 import { Routes, Route, Link } from "react-router-dom"
 import React from "react";
 import { useReminderDetail } from "../hooks/useReminders";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 
 export function ReminderDetail() {
 

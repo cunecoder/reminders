@@ -139,10 +139,11 @@ export function useReminderDetail(id) {
     } 
 }
 
-export function useReminderEdit(reminder) {
-    const [name, setName] = useState(reminder.remind_name);
-    /* below this line was ---> const [remindBy, setRemindBy.....*/
-    const [remindby, setRemindBy] = useState(reminder.remind_by);
+export function useReminderEdit(reminder = {}) {
+    // ?? "" are needed behind some useStates to prevent any undefined
+    // values if the reminder data does not import quick enough.
+    const [name, setName] = useState(reminder.remind_name ?? "");
+    const [remindby, setRemindBy] = useState(reminder.remind_by ?? "");
     const [createdat, setCreatedAt] = useState(reminder.created_at);
     const [updatedat, setUpdatedAt] = useState(reminder.updated_at);
     const [loading, setLoading] = useState(false);
@@ -157,7 +158,7 @@ export function useReminderEdit(reminder) {
     const editReminder = (event) => {
         event.preventDefault();
         setLoading(true);
-        fetch(`${API_URL}/reminders/${reminder.id}`, {
+        fetch(`${API_URL}/reminders/${reminder.id}/`, {
             /** Put is used to change data instead of POST, which creates new data */
             method: "PUT", 
             headers: {
