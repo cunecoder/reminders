@@ -3,7 +3,7 @@ ReminderDetail.jsx
 Description: This file is the page where reminder details can be viewed.
 Written by: Abe Gomez and David Marin for project with teamates: (Noah Leeper)
 Created on: 4/8/2025
-Last Updated on: 4/26/2025
+Last Updated on: 4/27/2025
 */
 
 import { Link } from "react-router-dom"
@@ -12,6 +12,9 @@ import { useReminderDetail } from "../hooks/useReminders";
 import { useParams } from "react-router";
 
 export function ReminderDetail() {
+/*
+* Use the information from the detail hook to view a reminder by id.
+*/
 
  const { id } = useParams();
  const { reminder, loading, error} = useReminderDetail(id);
@@ -62,12 +65,14 @@ export function ReminderDetail() {
    timeZone: "US/Central",
  });
  
+  // Styling for front end.
  return <>
-   <Link to={`/reminders/${reminder.id}/edit`}>Edit Reminder "{reminder.remind_name}"</Link>
    <h1>Name: "{reminder.remind_name}" ID: {reminder.id}</h1>
-   <h1>Remind by:  {formattedRemindBy}</h1>
-   <h1>Created at: {formattedCreatedAt}</h1>
-   <h1>Updated at: {formattedUpdatedAt}</h1>
+   <h2>Remind by:  {formattedRemindBy}</h2>
+   <h2>Created at: {formattedCreatedAt}</h2>
+   <h2>Updated at: {formattedUpdatedAt}</h2>
+   <Link to={`/reminders/${reminder.id}/edit`}>Edit Reminder "{reminder.remind_name}"</Link>
+   <h2></h2>
    <Link to={`/`}>Back to Reminders List</Link>
  </>
 }
