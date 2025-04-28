@@ -20,5 +20,5 @@ Contact Info:
 
 Work Distribution:
 * Noah Leeper: the entirety of the backend including tests and user auth
-* Abraham Gomez: urls/routing in the backend, the pages and hooks for list (App), create, delete, and some on edit and details
+* Abraham Gomez: urls/routing in the backend, mantine react component library, react calendar widget with datetimepicker, and the pages and hooks for list (App), create, delete, and some on edit and details
 * David Marin: helped with edit/details hooks and pages

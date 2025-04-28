@@ -16,16 +16,19 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ReminderCreate } from './pages/ReminderCreate.jsx';
 import { ReminderDetail } from './pages/ReminderDetail.jsx';
 import { ReminderEdit } from "./pages/ReminderEdit.jsx";
+import { MantineProvider } from "@mantine/core";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/reminders/create" element={<ReminderCreate />} />
-        <Route path="/reminders/:id/edit" element={<ReminderEdit />} />        
-        <Route path="/reminders/:id" element={<ReminderDetail />} />
-      </Routes>
-    </BrowserRouter>
+    <MantineProvider withGlobalStyles withNormalizeCSS>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/reminders/create" element={<ReminderCreate />} />
+          <Route path="/reminders/:id/edit" element={<ReminderEdit />} />        
+          <Route path="/reminders/:id" element={<ReminderDetail />} />
+        </Routes>
+      </BrowserRouter>
+    </MantineProvider>
   </StrictMode>,
 )

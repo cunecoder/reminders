@@ -48,10 +48,11 @@ export function useRemindersList() {
 
 export function useReminderCreate() {
     const [name, setName] = useState("");
-    const [remindBy, setRemindBy] = useState("");
+    const [remindBy, setRemindBy] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [successful, setSuccessful] = useState(false);
+
 
     /**
      * Create a new reminder and send the request.
@@ -61,7 +62,7 @@ export function useReminderCreate() {
     const createReminder = (event) => {
         event.preventDefault();
         setLoading(true);
-        const utcTime = new Date (remindBy).toISOString();
+        const utcTime = remindBy.toISOString();
         fetch(`${API_URL}/reminders/`, {
             method: "POST",
             headers: {
@@ -145,9 +146,7 @@ export function useReminderEdit(reminder = {}) {
     // values if the reminder data does not import quick enough.
     const [name, setName] = useState(reminder.remind_name ?? "");
     // Date modifications are just formatting to ensure database utc time is dealt with appropriately
-    const [remindby, setRemindBy] = useState(reminder?.remind_by ? new Date(reminder.remind_by).toISOString().slice(0,16) : "");
-    const [createdat, setCreatedAt] = useState(reminder.created_at ?? new Date().toISOString());
-    const [updatedat, setUpdatedAt] = useState(reminder.updated_at ?? new Date().toISOString());
+    const [remindBy, setRemindBy] = useState(reminder?.remind_by ? new Date(reminder.remind_by).toISOString().slice(0,16) : "");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [successful, setSuccessful] = useState(false);
@@ -162,7 +161,7 @@ export function useReminderEdit(reminder = {}) {
         setLoading(true);
 
         // Deal with database utc modifications
-        const utcTime = new Date(remindby).toISOString();
+        const utcTime = new Date(remindBy).toISOString();
         fetch(`${API_URL}/reminders/${reminder.id}/`, {
             /** Put is used to change data instead of POST, which creates new data */
             method: "PUT", 
@@ -173,8 +172,6 @@ export function useReminderEdit(reminder = {}) {
             body: JSON.stringify({
                 remind_name: name,
                 remind_by: utcTime,
-                created_at: createdat,
-                updated_at: updatedat
             }),
         })
 
@@ -196,12 +193,8 @@ export function useReminderEdit(reminder = {}) {
     return {
         name,
         setName,
-        remindby,
+        remindBy,
         setRemindBy,
-        createdat,
-        setCreatedAt,
-        updatedat,
-        setUpdatedAt,
         loading,
         error,
         successful,

@@ -9,12 +9,16 @@ Last Updated on: 4/26/2025
 
 import React from "react";
 import { Link } from "react-router-dom"
-import {useEffect} from "react";
 import { useReminderCreate } from "../hooks/useReminders";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
+import { DateTimePicker } from "@mantine/dates"
+import { TextInput } from "@mantine/core"
+import "@mantine/dates/styles.css"
+import "@mantine/core/styles.css"
 
 export function ReminderCreate() {
-    const { remind_name, setName, remind_by, setRemindBy, loading, error, successful, createReminder } =
+    const { name, setName, remindBy, setRemindBy, loading, error, successful, createReminder } =
         useReminderCreate();
     const navigate = useNavigate();
 
@@ -39,10 +43,27 @@ export function ReminderCreate() {
     return <>
         <h1>Create a Reminder</h1>
         <form onSubmit={createReminder}>
-            <input type="text" value={remind_name} onChange={(e) => setName(e.target.value)} />
-            <input type="datetime-local" value={remind_by} onChange={(e) => setRemindBy(e.target.value)}/>
+            <TextInput 
+                type="text" 
+                variant="filled" 
+                radius="xl" 
+                placeholder="Reminder Name" 
+                value={name} 
+                onChange={(e) => setName(e.target.value)} 
+            />
+            <h1></h1>
+            <DateTimePicker
+                value={remindBy}
+                valueFormat="MM/DD/YYYY  hh:mm A"
+                variant="filled"
+                radius="xl"
+                onChange={(date) => setRemindBy(date)}
+                placeholder="Pick date and type a time (hours, min, am/pm)"
+            />
+            <h1></h1>
             <button type="submit">Create Reminder</button>
         </form>
+        <h1></h1>
         <Link to={`/`}>Back to Reminders List</Link>
     </>
 }
